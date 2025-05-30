@@ -1,0 +1,31 @@
+CREATE DATABASE perceptron_ai;
+USE perceptron_ai;
+
+CREATE TABLE configuraciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    umbral FLOAT NOT NULL,
+    factor_aprendizaje FLOAT NOT NULL,
+    compuerta ENUM('AND', 'OR') NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE pesos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    configuracion_id INT,
+    entrada_num INT NOT NULL,
+    valor FLOAT NOT NULL,
+    FOREIGN KEY (configuracion_id) REFERENCES configuraciones(id)
+);
+
+CREATE TABLE resultados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    configuracion_id INT,
+    iteracion INT NOT NULL,
+    entrada1 INT NOT NULL,
+    entrada2 INT NOT NULL,
+    salida_esperada INT NOT NULL,
+    salida_obtenida INT NOT NULL,
+    error FLOAT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (configuracion_id) REFERENCES configuraciones(id)
+);
